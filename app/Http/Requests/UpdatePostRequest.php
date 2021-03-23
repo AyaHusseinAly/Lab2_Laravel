@@ -26,7 +26,6 @@ class UpdatePostRequest extends FormRequest
      */
     public function rules()
     {
-        $title = $this->request->get("title");
         $users=User::all();
         $users_str="";
         foreach($users as $user){
@@ -35,7 +34,7 @@ class UpdatePostRequest extends FormRequest
         }
    
         return [
-             'title' => ['required', Rule::unique('posts')->ignore($title,'title')],
+             'title' => ['required', Rule::unique('posts','title')->ignore($this->post)],
              'description' => ['required','min:10'],
              'user_id'=>"required|in:$users_str"
          ];
