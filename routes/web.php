@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 
 /*
@@ -22,13 +23,13 @@ Route::get('/posts', function () {
     return view('posts/index');
 });*/
 
-Route::get('/posts', [App\Http\Controllers\PostController::class, 'index'])->name('posts.index')->middleware(['auth']);
-Route::get('/posts/create',[App\Http\Controllers\PostController::class, 'create'])->name('posts.create')->middleware(['auth']);  //auth is middleware name defined in kernel.php
-Route::delete('/posts/{post}',[App\Http\Controllers\PostController::class, 'delete'])->name('posts.delete')->middleware(['auth']);
-Route::get('/posts/{post}', [App\Http\Controllers\PostController::class, 'show'])->name('posts.show')->middleware(['auth']);
-Route::get('/posts/{post}/edit',[App\Http\Controllers\PostController::class, 'edit'])->name('posts.edit')->middleware(['auth']);
-Route::post('/posts',[App\Http\Controllers\PostController::class, 'store'])->name('posts.store')->middleware(['auth']);
-Route::put('/posts/{post}',[App\Http\Controllers\PostController::class, 'update'])->name('posts.update')->middleware(['auth']);
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware(['auth']);
+Route::get('/posts/create',[PostController::class, 'create'])->name('posts.create')->middleware(['auth']);  //auth is middleware name defined in kernel.php
+Route::delete('/posts/{post}',[PostController::class, 'delete'])->name('posts.delete')->middleware(['auth']);
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')->middleware(['auth']);
+Route::get('/posts/{post}/edit',[PostController::class, 'edit'])->name('posts.edit')->middleware(['auth']);
+Route::post('/posts',[PostController::class, 'store'])->name('posts.store')->middleware(['auth']);
+Route::put('/posts/{post}',[PostController::class, 'update'])->name('posts.update')->middleware(['auth']);
 
 
 
