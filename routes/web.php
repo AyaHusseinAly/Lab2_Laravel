@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use Laravel\Socialite\Facades\Socialite;
 
 
 /*
@@ -31,7 +32,54 @@ Route::get('/posts/{post}/edit',[PostController::class, 'edit'])->name('posts.ed
 Route::post('/posts',[PostController::class, 'store'])->name('posts.store')->middleware(['auth']);
 Route::put('/posts/{post}',[PostController::class, 'update'])->name('posts.update')->middleware(['auth']);
 
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('github')->redirect();
+});
 
+Route::get('/auth/callback', function () {
+    $user = Socialite::driver('github')->stateless()->user();
+    $finduser = User::where('email', $user->email)->first();
+    if ($finduser) {
+        Auth::login($finduser);
+        return redirect()->route('posts.index');
+    } else {
+        $newUser = User::create([
+            'name'=>$user->nickname,
+            'email'=>$user->email,
+            'password'=>$user->id,
+
+        ]);
+        Auth::login($finduser);
+        return redirect()->route('index');
+    }
+    // $user->token
+});
+
+Route::get('/auth/redirect/google', function () {
+    // dd("we are log in with google");
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('/auth/callback/google', function () {
+    $user = Socialite::driver('google')->user();
+
+    // $user->token
+    $finduser = User::where('email', $user->email)->first();
+    if ($finduser) {
+        Auth::login($finduser);
+        return redirect()->route('posts.index');
+    } else {
+        $newUser = User::create([
+            'name'=>$user->nickname,
+            'email'=>$user->email,
+            'password'=>$user->id,
+
+        ]);
+        Auth::login($finduser);
+        return redirect()->route('index');
+    }
+    //  dd($user);
+});
 
 /*
 Route::get('/test', function () {

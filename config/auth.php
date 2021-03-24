@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'web',  //parameter send to  middleware its defualt is web in sanctum changed to sanctum --->> middleware('auth:anctum')
         'passwords' => 'users',
     ],
 

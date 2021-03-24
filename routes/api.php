@@ -24,7 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/posts', [PostController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{post}', [PostController::class, 'show'])->middleware('auth:sanctum');
 Route::post('/posts', [PostController::class, 'store'])->middleware('auth:sanctum');
 
