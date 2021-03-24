@@ -16,7 +16,7 @@ class PostController extends Controller
     public function index(){
         //dd("we're in post api");
         //$posts=Post::all();
-        $posts=Post::paginate(3);
+        $posts=Post::with('myUserRelation')->paginate(3);
         return PostResource::collection($posts);
 
     }

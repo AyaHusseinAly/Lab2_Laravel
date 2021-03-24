@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index()
     {
         //dd(Post::paginate(3));
-        $posts=Post::paginate(3);
+        $posts=Post::with('myUserRelation')->paginate(3);
         return view('posts.index', [
             //'posts' => Post::all()
             'posts' => $posts
